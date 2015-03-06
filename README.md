@@ -11,5 +11,6 @@ Il software deve riconoscere quando una partita è finita e deve proporne un'alt
 
 • Non è previsto che il software implementi un'intelligenza artificiale, è solo un gioco fra
 umani
+
 • Non è prevista l'implementazione delle regole dell'arrocco e del movimento iniziale dei
 pedoni

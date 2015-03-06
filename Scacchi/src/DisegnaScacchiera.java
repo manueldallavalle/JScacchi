@@ -74,7 +74,7 @@ public class DisegnaScacchiera extends JPanel{
                 }
                 
                 (scacchi[z][k]).addActionListener(new GestoreAzione(scacchi));
-                //scacchi[z][k].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 4));
+                scacchi[z][k].setBorder(BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY, 1));
                 scacchiera.add(scacchi[z][k]);
             }
             
@@ -112,5 +112,8 @@ public class DisegnaScacchiera extends JPanel{
            
            add(scacchiera,BorderLayout.CENTER);
            scacchiera.setLayout(new GridLayout(8,8));
+    }
+    public Pedina[][] getScacchiera(){
+        return scacchi;
     }
 }

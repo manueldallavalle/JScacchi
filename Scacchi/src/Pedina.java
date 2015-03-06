@@ -6,7 +6,9 @@ import javax.swing.JOptionPane;
 public class Pedina extends Casella{
     private Colore colore_pezzo;
     private Pezzi cPezzo;
-    
+    public Pedina(){
+        //super();
+    }
     public Pedina(Colore sfondo, int x, int y, Colore col_pezzo){
         super(sfondo,x,y);
         colore_pezzo = col_pezzo;
