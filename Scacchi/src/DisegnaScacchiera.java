@@ -1,5 +1,8 @@
 
 import java.awt.BorderLayout;
+import static java.awt.BorderLayout.NORTH;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,12 +12,20 @@ import javax.swing.*;
 public class DisegnaScacchiera extends JPanel{
     private Pedina[][] scacchi = new Pedina[8][8];
     private int[][] posizione=new int[8][8];
+    private JLabel cr[]=new JLabel[9];
+    private JLabel cc[]=new JLabel[8];
     private int i,j;
     int cont=0;
+    private JPanel scacchiera=new JPanel();
+    private JPanel coordinateRiga=new JPanel();
+    private JPanel coordinateColonna=new JPanel();
     
     public DisegnaScacchiera(){
-
-        this.setLayout(new GridLayout(8,8));
+        
+        this.setLayout(new BorderLayout());
+        
+        posizione();
+        
         Colore temp_colore_pp;
         for(int z = 0; z < 8; z++){
             // COLORE CASELLE
@@ -54,9 +65,45 @@ public class DisegnaScacchiera extends JPanel{
                 
                 (scacchi[z][k]).addActionListener(new GestoreAzione(scacchi));
                 
-                add(scacchi[z][k]);
+                scacchiera.add(scacchi[z][k]);
             }
             
         }
+    }
+
+
+
+void posizione(){
+            
+            //Imposta le coordinate sopra della scacchiera
+    
+           coordinateRiga.setLayout(new FlowLayout());
+           JLabel vuoto=new JLabel(" ");
+           vuoto.setPreferredSize(new Dimension(35,40));
+           coordinateRiga.add(vuoto);
+          
+           for(int i=0;i<8;i++){
+               cr[i]=new JLabel(""+(char)(i+65));                 
+               cr[i].setHorizontalAlignment(JLabel.CENTER);
+               cr[i].setPreferredSize(new Dimension(70, 40));
+               coordinateRiga.add(cr[i]);               
+           }
+           
+           //Imposta le coordinate a sinistra della scacchiera
+           
+           coordinateColonna.setLayout(new GridLayout(8,1));
+           coordinateColonna.setPreferredSize(new Dimension(40,70));
+           
+           for(int i=0;i<8;i++){
+               cc[i]=new JLabel(""+(i+1));
+               cc[i].setHorizontalAlignment( JLabel.CENTER );
+               coordinateColonna.add(cc[i]);
+           }
+           
+           add(coordinateColonna,BorderLayout.WEST);
+           add(coordinateRiga,BorderLayout.NORTH);
+           
+           add(scacchiera,BorderLayout.CENTER);
+           scacchiera.setLayout(new GridLayout(8,8));
     }
 }
