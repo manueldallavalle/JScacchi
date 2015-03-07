@@ -15,8 +15,12 @@ public class Pedone extends Pedina{
         //super(sfondo,x,y,pezzo,col_pezzo);
         super(sfondo,x,y,col_pezzo);
     }
-    public int getMovimentoUpX(){
+    public int getMovimentoDownX(){
         return getRiga()+1;
+    }
+    
+    public int getMovimentoUpX(){
+        return getRiga()-1;
     }
     public int getMovimentoUpY(){
         return getColonna();

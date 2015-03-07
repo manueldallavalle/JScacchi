@@ -27,10 +27,10 @@ public class GestoreAzione implements ActionListener{
     }
        
     public void actionPerformed(ActionEvent e) {
-        Pedina p_premuta = (Pedina)e.getSource();
-        
+        Pedina p_premuta = (Pedina)e.getSource();        
         System.out.println("("+p_premuta.getRiga()+","+p_premuta.getColonna()+")");
         cambiaPezzo(p_premuta, p_premuta.getRiga(), p_premuta.getColonna());
+        
     }
 
    
@@ -41,8 +41,8 @@ public class GestoreAzione implements ActionListener{
                 x_vecchia=x;
                 y_vecchia=y;
             }
-            else{
-                    cancellaBordo(x,y);
+            else{                                                        
+                    cancellaBordo();
                     (scacchi[x][y]).setPezzo(t_pedina.getPezzo());
                     t_pedina.Elimina();
                     t_pedina = null;
@@ -63,20 +63,86 @@ public class GestoreAzione implements ActionListener{
         switch (ped.getPezzo())
         {
             case PEDONE:
-                Pedone pedone=new Pedone(Colore.NERO,x,y,ped.getPezzo(),Colore.NERO);
-                a=pedone.getMovimentoUpX();
-                scacchi[a][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 4));
+                if(ped.colore_pezzo.equals(Colore.NERO)){
+                    if(x+1<9)
+                    scacchi[x+1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                }
+                else{
+                    if(x-1>0)
+                    scacchi[x-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3)); 
+                }
             break;
             case TORRE:
-                Torre torre=new Torre(Colore.NERO,x,y,ped.getPezzo(),Colore.NERO);
-                a=torre.getMovimentoAvantiX();
-                b=torre.getMovimentoAvantiY();
-                c=torre.getMovimentoLateraleX();
-                d=torre.getMovimentoLateraleY();
-                
+                   //caselle in basso
+                   for(int i=y;i<7;i++){
+                        scacchi[x][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   //casella in alto
+                   for(int i=y;i>0;i--){
+                        scacchi[x][i-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   //caselle a destra
+                   for(int i=x;i<7;i++){
+                    scacchi[i+1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   //caselle a sinistra
+                   for(int i=x;i>0;i--){
+                    scacchi[i-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   break;
+            case RE:
+                /*while()    
+                scacchi[x-1][]
+                break;*/
+            case REGINA:
+                    //caselle in basso
+                   for(int i=y;i<7;i++){
+                        scacchi[x][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   //casella in alto
+                   for(int i=y;i>0;i--){
+                        scacchi[x][i-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   //caselle a destra
+                   for(int i=x;i<7;i++){
+                    scacchi[i+1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   //caselle a sinistra
+                   for(int i=x;i>0;i--){
+                    scacchi[i-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   //diagonale basso dx
+                    for(int i=x;i<7;i++){
+                    scacchi[i+1][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                    //diagonale alto sx
+                   for(int i=x;i>0;i--){
+                    scacchi[i-1][i-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                break;
+            case ALFIERE:
+                   for(int i=y;i<7;i++){
+                       for(int j=y;j>0;j--){
+                        scacchi[i+1][j-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                       }                       
+                   }
+                   for(int i=y;i>0;i--){
+                        scacchi[i-1][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   for(int i=x;i<7;i++){
+                    scacchi[i+1][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   for(int i=x;i>0;i--){
+                    scacchi[i-1][i-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                break;
         }
     }
-    public void cancellaBordo(int x,int y){
-        scacchi[x][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK, 1));
+    
+    public void cancellaBordo(){
+        for(int i=0;i<8;i++){
+           for(int j=0;j<8;j++)
+            scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK, 1)); 
+        }
     }
 }

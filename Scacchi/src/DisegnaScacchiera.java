@@ -64,9 +64,9 @@ public class DisegnaScacchiera extends JPanel{
                     }else if(k == 2 || k == 5){
                         (scacchi[z][k]).setPezzo(Pezzi.ALFIERE);
                     }else if(k == 3){
-                        (scacchi[z][k]).setPezzo(Pezzi.REGINA);
-                    }else if(k == 4){
                         (scacchi[z][k]).setPezzo(Pezzi.RE);
+                    }else if(k == 4){
+                        (scacchi[z][k]).setPezzo(Pezzi.REGINA);
                     }
 
                 }else if(z == 1 || z == 6){
@@ -113,6 +113,7 @@ public class DisegnaScacchiera extends JPanel{
            add(scacchiera,BorderLayout.CENTER);
            scacchiera.setLayout(new GridLayout(8,8));
     }
+    
     public Pedina[][] getScacchiera(){
         return scacchi;
     }

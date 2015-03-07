@@ -13,17 +13,23 @@ public class Torre extends Pedina{
         super(sfondo,x,y,col_pezzo);
     }
     
-    public int getMovimentoAvantiX(){
-        return getRiga();
+    public int getMovimentoUpX(){
+        
+           return getRiga()+1; 
+        
     }
-    public int getMovimentoAvantiY(){
-        return 8;
+    public int getMovimentoDownX(){
+        
+           return getRiga()-1;
     }
-    public int getMovimentoLateraleX(){
-        return 8;
+    
+    public int getMovimentoLateraleDx(){
+        
+           return getColonna()+1;
     }
-    public int getMovimentoLateraleY(){
-        return getColonna();
+    public int getMovimentoLateraleSx(){
+        
+           return getColonna()-1;
     }
 }
     

@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Pedina extends Casella{
-    private Colore colore_pezzo;
+    public Colore colore_pezzo;
     private Pezzi cPezzo;
     public Pedina(){
         //super();
