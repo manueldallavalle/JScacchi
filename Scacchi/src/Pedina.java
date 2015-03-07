@@ -1,21 +1,17 @@
 
-import java.net.URL;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Pedina extends Casella{
     public Colore colore_pezzo;
     private Pezzi cPezzo;
-    public Pedina(){
-        //super();
-    }
-    public Pedina(Colore sfondo, int x, int y, Colore col_pezzo){
+
+    public Pedina(Colore sfondo, int x, int y){
         super(sfondo,x,y);
-        colore_pezzo = col_pezzo;
     }
     
-    public void setPezzo(Pezzi pp){
+    public void setPezzo(Pezzi pp, Colore col_pezzo){
         cPezzo = pp;
+        colore_pezzo = col_pezzo;
         switch (pp)
         {
             case PEDONE:
@@ -69,6 +65,10 @@ public class Pedina extends Casella{
     
     public Pezzi getPezzo(){
         return cPezzo;
+    }
+    
+    public Colore getColore(){
+        return colore_pezzo;
     }
     
     public void Elimina(){

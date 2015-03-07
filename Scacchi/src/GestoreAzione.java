@@ -1,25 +1,13 @@
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author pc
- */
 public class GestoreAzione implements ActionListener{
     private Pedina[][] scacchi;
-    private int x_vecchia,y_vecchia,a,b,c,d;
     private static Pedina t_pedina = null;
     
     public GestoreAzione(Pedina[][] scacchi) {
@@ -28,29 +16,48 @@ public class GestoreAzione implements ActionListener{
        
     public void actionPerformed(ActionEvent e) {
         Pedina p_premuta = (Pedina)e.getSource();        
-        System.out.println("("+p_premuta.getRiga()+","+p_premuta.getColonna()+")");
         cambiaPezzo(p_premuta, p_premuta.getRiga(), p_premuta.getColonna());
         
     }
-
-   
-    public void cambiaPezzo(Pedina pedNew,int x,int y){
+       
+    private void cambiaPezzo(Pedina pedNew,int x,int y){
+            //1° CLICK
             if(t_pedina == null){
-                t_pedina = pedNew; 
-                caselleAmmesse(pedNew,x,y);
-                x_vecchia=x;
-                y_vecchia=y;
-            }
-            else{                                                        
-                    cancellaBordo();
-                    (scacchi[x][y]).setPezzo(t_pedina.getPezzo());
+                if(pedNew.getPezzo() != null){
+                    t_pedina = pedNew; 
+                    caselleAmmesse(pedNew,x,y);
+                }else{
+                    JOptionPane.showMessageDialog(null,"Seleziona una casella valida!", "Errore!",JOptionPane.ERROR_MESSAGE);
+                }
+            //2° CLICK
+            }else{
+                if(x == t_pedina.getRiga() && y == t_pedina.getColonna()){
+                    JOptionPane.showMessageDialog(null,"Seleziona delle coordinate diverse dalle originali!", "Errore!",JOptionPane.ERROR_MESSAGE);
+                    //RESET
+                    resetBordo();
+                    t_pedina = null;
+                }else if((sovrascriviPezzo(t_pedina,pedNew)) == true){
+                    resetBordo();
+                    (scacchi[x][y]).setPezzo(t_pedina.getPezzo(), t_pedina.getColore());
                     t_pedina.Elimina();
                     t_pedina = null;
+                }else{
+                    JOptionPane.showMessageDialog(null,"Non puoi mangiare i tuoi pezzi!", "Errore!",JOptionPane.ERROR_MESSAGE);
+                    //RESET
+                    resetBordo();
+                    t_pedina = null;
+                }
             } 
     }
-    public boolean controllaMossa(Pedina ped,int x, int y,int x_old,int y_old){
-        switch (ped.getPezzo())
-        {
+    
+    protected boolean sovrascriviPezzo(Pedina old, Pedina nn){
+        // STESSO COLORE -- MOSSA NON VALIDA
+        // COLORE DIVERSO -- MOSSA VALIDA
+        return (old.getColore() != nn.getColore());
+    }
+    
+    private boolean controllaMossa(Pedina ped,int x, int y,int x_old,int y_old){
+        switch (ped.getPezzo()) {
             case PEDONE:
                 Pedone pedone=new Pedone(Colore.NERO,x_old,y_old,ped.getPezzo(),Colore.NERO);
                 if(pedone.getMovimentoUpX()==x)
@@ -59,19 +66,15 @@ public class GestoreAzione implements ActionListener{
         }
         return false;
     }
-    public void caselleAmmesse(Pedina ped,int x, int y){
-        switch (ped.getPezzo())
-        {
+    private void caselleAmmesse(Pedina ped,int x, int y){
+        switch (ped.getPezzo()){
             case PEDONE:
                 if(ped.colore_pezzo.equals(Colore.NERO)){
-                    if(x+1<9)
-                    scacchi[x+1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                    if(x+1 < 9) scacchi[x+1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                }else{
+                    if(x-1 > 0) scacchi[x-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3)); 
                 }
-                else{
-                    if(x-1>0)
-                    scacchi[x-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3)); 
-                }
-            break;
+                break;
             case TORRE:
                    //caselle in basso
                    for(int i=y;i<7;i++){
@@ -139,7 +142,7 @@ public class GestoreAzione implements ActionListener{
         }
     }
     
-    public void cancellaBordo(){
+    private void resetBordo(){
         for(int i=0;i<8;i++){
            for(int j=0;j<8;j++)
             scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK, 1)); 

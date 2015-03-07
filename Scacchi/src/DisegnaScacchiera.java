@@ -44,33 +44,33 @@ public class DisegnaScacchiera extends JPanel{
                 
                 if(z % 2 == 0){
                     if(k % 2 == 0){
-                        scacchi[z][k] = new Pedina(Colore.BIANCO, z, k, temp_colore_pp);
+                        scacchi[z][k] = new Pedina(Colore.BIANCO, z, k);
                     }else{
-                        scacchi[z][k] = new Pedina(Colore.NERO, z, k, temp_colore_pp);
+                        scacchi[z][k] = new Pedina(Colore.NERO, z, k);
                     }
                 }else{
                     if(k % 2 != 0){
-                        scacchi[z][k] = new Pedina(Colore.BIANCO, z, k, temp_colore_pp);
+                        scacchi[z][k] = new Pedina(Colore.BIANCO, z, k);
                     }else{
-                        scacchi[z][k] = new Pedina(Colore.NERO, z, k, temp_colore_pp);
+                        scacchi[z][k] = new Pedina(Colore.NERO, z, k);
                     }
                 }
 
                 if(z == 0 || z == 7){
                     if(k == 0 || k == 7){
-                        (scacchi[z][k]).setPezzo(Pezzi.TORRE);
+                        (scacchi[z][k]).setPezzo(Pezzi.TORRE, temp_colore_pp);
                     }else if(k == 1 || k == 6){
-                        (scacchi[z][k]).setPezzo(Pezzi.CAVALLO);
+                        (scacchi[z][k]).setPezzo(Pezzi.CAVALLO, temp_colore_pp);
                     }else if(k == 2 || k == 5){
-                        (scacchi[z][k]).setPezzo(Pezzi.ALFIERE);
+                        (scacchi[z][k]).setPezzo(Pezzi.ALFIERE, temp_colore_pp);
                     }else if(k == 3){
-                        (scacchi[z][k]).setPezzo(Pezzi.RE);
+                        (scacchi[z][k]).setPezzo(Pezzi.RE, temp_colore_pp);
                     }else if(k == 4){
-                        (scacchi[z][k]).setPezzo(Pezzi.REGINA);
+                        (scacchi[z][k]).setPezzo(Pezzi.REGINA, temp_colore_pp);
                     }
 
                 }else if(z == 1 || z == 6){
-                    (scacchi[z][k]).setPezzo(Pezzi.PEDONE);
+                    (scacchi[z][k]).setPezzo(Pezzi.PEDONE, temp_colore_pp);
                 }
                 
                 (scacchi[z][k]).addActionListener(new GestoreAzione(scacchi));

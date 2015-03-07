@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/dade9_000/Desktop/JScacchi/Scacchi/src/Colore.java</file>
-            <file>file:/C:/Users/dade9_000/Desktop/JScacchi/Scacchi/src/GestoreAzione.java</file>
-            <file>file:/C:/Users/dade9_000/Desktop/JScacchi/Scacchi/src/Torre.java</file>
-            <file>file:/C:/Users/dade9_000/Desktop/JScacchi/Scacchi/src/Regina.java</file>
+            <file>file:/C:/Users/Manuel/Documents/GitHub/JScacchi/Scacchi/src/GestoreAzione.java</file>
+            <file>file:/C:/Users/Manuel/Documents/GitHub/JScacchi/Scacchi/src/Pedina.java</file>
+            <file>file:/C:/Users/Manuel/Documents/GitHub/JScacchi/Scacchi/src/DisegnaScacchiera.java</file>
         </group>
     </open-files>
 </project-private>
