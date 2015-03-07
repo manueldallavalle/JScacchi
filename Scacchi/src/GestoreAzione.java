@@ -3,15 +3,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 
 public class GestoreAzione implements ActionListener{
     private Pedina[][] scacchi;
+    private JLabel text;
+    private static int cont_mosse=0;
     private static Pedina t_pedina = null;
     
-    public GestoreAzione(Pedina[][] scacchi) {
+    public GestoreAzione(Pedina[][] scacchi,JLabel text) {
         this.scacchi = scacchi;
+        this.text=text;
     }
        
     public void actionPerformed(ActionEvent e) {
@@ -41,6 +45,7 @@ public class GestoreAzione implements ActionListener{
                     (scacchi[x][y]).setPezzo(t_pedina.getPezzo(), t_pedina.getColore());
                     t_pedina.Elimina();
                     t_pedina = null;
+                    cont_mosse++;
                 }else{
                     JOptionPane.showMessageDialog(null,"Non puoi mangiare i tuoi pezzi!", "Errore!",JOptionPane.ERROR_MESSAGE);
                     //RESET
@@ -48,6 +53,7 @@ public class GestoreAzione implements ActionListener{
                     t_pedina = null;
                 }
             } 
+            text.setText("MOSSE PARTITA: "+(cont_mosse));
     }
     
     protected boolean sovrascriviPezzo(Pedina old, Pedina nn){

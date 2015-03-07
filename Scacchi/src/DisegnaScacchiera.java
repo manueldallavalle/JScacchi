@@ -24,21 +24,22 @@ public class DisegnaScacchiera extends JPanel{
     private int[][] posizione=new int[8][8];
     private JLabel cr[]=new JLabel[9];
     private JLabel cc[]=new JLabel[8];
+    private JLabel mossa=new JLabel();
     private int i,j;
     int cont=0;
     private JPanel scacchiera=new JPanel();
     private JPanel coordinateRiga=new JPanel();
     private JPanel coordinateColonna=new JPanel();
+    private JPanel contatoreMosse=new JPanel();
     
     public DisegnaScacchiera(){
         
         this.setLayout(new BorderLayout());
-        
-        bordo();
-        scacchiera();
-        
+        struttura();
+        setScacchiera();
+        //drawContatoreMosse();
     }
-    private void bordo(){
+    private void struttura(){
             //Imposta le coordinate sopra della scacchiera
            coordinateRiga.setLayout(new FlowLayout());
            JLabel vuoto=new JLabel(" ");
@@ -65,13 +66,38 @@ public class DisegnaScacchiera extends JPanel{
                coordinateColonna.add(cc[i]);
                coordinateColonna.setBackground(java.awt.Color.decode("#c35817"));
            }
+           
+           //imposta la scacchiera vera e propria
+           
            add(coordinateColonna,BorderLayout.WEST);
            add(coordinateRiga,BorderLayout.NORTH);
            
            add(scacchiera,BorderLayout.CENTER);
            scacchiera.setLayout(new GridLayout(8,8));
+           
+           //imposta jlabel che conta le mosse
+           
+           contatoreMosse.setLayout(new GridLayout(1,3));
+           vuoto.setPreferredSize(new Dimension(35,30));
+           mossa.setText("MOSSE PARTITA:");
+           mossa.setPreferredSize(new Dimension(40,40));
+           mossa.setVerticalAlignment(JLabel.CENTER);
+           mossa.setHorizontalAlignment(JLabel.LEFT);
+           mossa.setForeground(java.awt.Color.white);
+           contatoreMosse.add(mossa);
+           contatoreMosse.setBackground(java.awt.Color.decode("#c35817"));
+           add(contatoreMosse,BorderLayout.SOUTH);
+           
     }
-    private void scacchiera(){
+    private void drawContatoreMosse(){
+           /*contatoreMosse.setLayout(new FlowLayout());
+           JLabel vuoto=new JLabel(" ");
+           vuoto.setPreferredSize(new Dimension(35,30));
+           contatoreMosse.add(vuoto);
+           contatoreMosse.setBackground(java.awt.Color.decode("#FFFFFF"));
+           add(contatoreMosse,BorderLayout.SOUTH);*/
+    }
+    private void setScacchiera(){
         Colore temp_colore_pp;
         for(int z = 0; z < 8; z++){
             // COLORE CASELLE
@@ -109,7 +135,7 @@ public class DisegnaScacchiera extends JPanel{
                     (scacchi[z][k]).setPezzo(Pezzi.PEDONE, temp_colore_pp);
                 }
                 
-                (scacchi[z][k]).addActionListener(new GestoreAzione(scacchi));
+                (scacchi[z][k]).addActionListener(new GestoreAzione(scacchi,mossa));
                 scacchi[z][k].setBorder(BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY, 1));
                 scacchiera.add(scacchi[z][k]);
             }
