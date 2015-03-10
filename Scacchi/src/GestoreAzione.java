@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class GestoreAzione implements ActionListener{
     private Pedina[][] scacchi;
     private JLabel text;
-    private static int cont_mosse=0;
+    private static int cont_mosse = 1;
     private static Pedina t_pedina = null;
     
     public GestoreAzione(Pedina[][] scacchi,JLabel text) {
@@ -20,8 +20,22 @@ public class GestoreAzione implements ActionListener{
     }
        
     public void actionPerformed(ActionEvent e) {
-        Pedina p_premuta = (Pedina)e.getSource();        
-        cambiaPezzo(p_premuta, p_premuta.getRiga(), p_premuta.getColonna());
+        Boolean errore = false;
+        Pedina ped = (Pedina)e.getSource();
+        // CONTROLLO PEDINA VUOTA O SE STA MANGIANDO
+        if((ped.getPezzo() == null) || (t_pedina != null)){
+            errore = false;
+        }else if(((cont_mosse % 2 == 0) && !(ped.getColore().equals(Colore.NERO))) ||
+                ((cont_mosse % 2 != 0) && !(ped.getColore().equals(Colore.BIANCO)))){
+            errore = true;
+        }
+        
+        if(errore){
+            String plurale = (ped.getColore().equals(Colore.NERO)) ? "bianchi" : "neri";
+            JOptionPane.showMessageDialog(null,"E' il turno dei " + plurale + "!", "Errore!",JOptionPane.ERROR_MESSAGE);
+        }else{
+            cambiaPezzo(ped, ped.getRiga(), ped.getColonna());
+        }
         
     }
        
@@ -29,9 +43,8 @@ public class GestoreAzione implements ActionListener{
             //1° CLICK
             if(t_pedina == null){
                 if(pedNew.getPezzo() != null){
-                    t_pedina = pedNew; 
+                    t_pedina = pedNew;
                     caselleAmmesse(pedNew,x,y);                    
-                    System.out.print(""+(x+1)+(y-1));
                 }else{
                     JOptionPane.showMessageDialog(null,"Seleziona una casella valida!", "Errore!",JOptionPane.ERROR_MESSAGE);
                 }
@@ -40,14 +53,14 @@ public class GestoreAzione implements ActionListener{
                 if(x == t_pedina.getRiga() && y == t_pedina.getColonna()){
                     JOptionPane.showMessageDialog(null,"Seleziona delle coordinate diverse dalle originali!", "Errore!",JOptionPane.ERROR_MESSAGE);
                     //RESET
-                    resetBordo();
                     t_pedina = null;
-                }else if((sovrascriviPezzo(t_pedina,pedNew)) == true){
                     resetBordo();
+                }else if((sovrascriviPezzo(t_pedina,pedNew)) == true){
                     (scacchi[x][y]).setPezzo(t_pedina.getPezzo(), t_pedina.getColore());
                     t_pedina.Elimina();
                     t_pedina = null;
                     cont_mosse++;
+                    resetBordo();
                 }else{
                     JOptionPane.showMessageDialog(null,"Non puoi mangiare i tuoi pezzi!", "Errore!",JOptionPane.ERROR_MESSAGE);
                     //RESET
@@ -55,7 +68,7 @@ public class GestoreAzione implements ActionListener{
                     t_pedina = null;
                 }
             } 
-            text.setText("MOSSE PARTITA: "+(cont_mosse));
+            text.setText("\t\tMOSSE PARTITA: "+(cont_mosse - 1));
     }
     
     protected boolean sovrascriviPezzo(Pedina old, Pedina nn){
@@ -64,16 +77,6 @@ public class GestoreAzione implements ActionListener{
         return (old.getColore() != nn.getColore());
     }
     
-    private boolean controllaMossa(Pedina ped,int x, int y,int x_old,int y_old){
-        switch (ped.getPezzo()) {
-            case PEDONE:
-                Pedone pedone=new Pedone(Colore.NERO,x_old,y_old,ped.getPezzo(),Colore.NERO);
-                if(pedone.getMovimentoUpX()==x)
-                    return true;
-             break;
-        }
-        return false;
-    }
     private void caselleAmmesse(Pedina ped,int x, int y){
         switch (ped.getPezzo()){
             case PEDONE: //[FUNZIONA]
@@ -119,7 +122,7 @@ public class GestoreAzione implements ActionListener{
                                         if(i==x && j==y) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.black, 2));
                                         else scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
                                     }
-                                } 
+                                }                     //scacchi[xx][yy] = null;
                             }
                         }else{ //caso sinistra out
                             for(int i=x-1;i<x+2;i++){
