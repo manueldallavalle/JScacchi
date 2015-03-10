@@ -1,5 +1,6 @@
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import static java.awt.BorderLayout.NORTH;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,8 +15,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
-import javafx.scene.layout.Border;
-import javafx.scene.paint.Color;
 
 import javax.swing.*;
 
@@ -71,32 +70,22 @@ public class DisegnaScacchiera extends JPanel{
            
            add(coordinateColonna,BorderLayout.WEST);
            add(coordinateRiga,BorderLayout.NORTH);
-           
+           scacchiera.setBackground(Color.decode("#c35817"));
            add(scacchiera,BorderLayout.CENTER);
            scacchiera.setLayout(new GridLayout(8,8));
            
            //imposta jlabel che conta le mosse
            
-           contatoreMosse.setLayout(new GridLayout(1,3));
-           vuoto.setPreferredSize(new Dimension(35,30));
-           mossa.setText("MOSSE PARTITA:");
-           mossa.setPreferredSize(new Dimension(40,40));
-           mossa.setVerticalAlignment(JLabel.CENTER);
-           mossa.setHorizontalAlignment(JLabel.LEFT);
+           contatoreMosse.setLayout(new FlowLayout(FlowLayout.LEADING,42,0));
+           mossa.setText("MOSSE PARTITA: 0");
+           mossa.setPreferredSize(new Dimension(200,45));
            mossa.setForeground(java.awt.Color.white);
            contatoreMosse.add(mossa);
            contatoreMosse.setBackground(java.awt.Color.decode("#c35817"));
            add(contatoreMosse,BorderLayout.SOUTH);
            
     }
-    private void drawContatoreMosse(){
-           /*contatoreMosse.setLayout(new FlowLayout());
-           JLabel vuoto=new JLabel(" ");
-           vuoto.setPreferredSize(new Dimension(35,30));
-           contatoreMosse.add(vuoto);
-           contatoreMosse.setBackground(java.awt.Color.decode("#FFFFFF"));
-           add(contatoreMosse,BorderLayout.SOUTH);*/
-    }
+    
     private void setScacchiera(){
         Colore temp_colore_pp;
         for(int z = 0; z < 8; z++){
