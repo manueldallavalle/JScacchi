@@ -73,6 +73,8 @@ public class Pedina extends Casella{
     
     public void Elimina(){
         setIcon(new javax.swing.ImageIcon(getClass().getResource("")));
+        cPezzo = null;
+        colore_pezzo = null;
     }
     public void Sostituisci(String file){
         setIcon(new javax.swing.ImageIcon(file));
