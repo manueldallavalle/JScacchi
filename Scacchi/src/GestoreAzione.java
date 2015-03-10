@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
@@ -6,6 +7,7 @@ import static java.lang.Math.abs;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 
 
 public class GestoreAzione implements ActionListener{
@@ -23,7 +25,7 @@ public class GestoreAzione implements ActionListener{
         Boolean errore = false;
         Pedina ped = (Pedina)e.getSource();
         // CONTROLLO PEDINA VUOTA O SE STA MANGIANDO
-       /* if((ped.getPezzo() == null) || (t_pedina != null)){
+        if((ped.getPezzo() == null) || (t_pedina != null)){
             errore = false;
         }else if(((cont_mosse % 2 == 0) && !(ped.getColore().equals(Colore.NERO))) ||
                 ((cont_mosse % 2 != 0) && !(ped.getColore().equals(Colore.BIANCO)))){
@@ -33,9 +35,9 @@ public class GestoreAzione implements ActionListener{
         if(errore){
             String plurale = (ped.getColore().equals(Colore.NERO)) ? "bianchi" : "neri";
             JOptionPane.showMessageDialog(null,"E' il turno dei " + plurale + "!", "Errore!",JOptionPane.ERROR_MESSAGE);
-        }else{*/
+        }else{
             cambiaPezzo(ped, ped.getRiga(), ped.getColonna());
-       // }
+        }
        
     }
        
@@ -56,10 +58,18 @@ public class GestoreAzione implements ActionListener{
                     t_pedina = null;
                     resetBordo();
                 }else if((sovrascriviPezzo(t_pedina,pedNew)) == true){
-                    (scacchi[x][y]).setPezzo(t_pedina.getPezzo(), t_pedina.getColore());
-                    t_pedina.Elimina();
+                    // CONTROLLO CASELLA VALIDA
+                    Color lp = ((LineBorder)pedNew.getBorder()).getLineColor();
+        
+                    if(lp.equals(Color.green)){
+                        (scacchi[x][y]).setPezzo(t_pedina.getPezzo(), t_pedina.getColore());
+                        cont_mosse++;
+                        t_pedina.Elimina();
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Seleziona una casella valida!", "Errore!",JOptionPane.ERROR_MESSAGE);
+                    }
+                   
                     t_pedina = null;
-                    cont_mosse++;
                     resetBordo();
                 }else{
                     JOptionPane.showMessageDialog(null,"Non puoi mangiare i tuoi pezzi!", "Errore!",JOptionPane.ERROR_MESSAGE);
