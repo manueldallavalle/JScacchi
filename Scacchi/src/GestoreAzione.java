@@ -114,7 +114,7 @@ public class GestoreAzione implements ActionListener{
                     scacchi[i-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
                    }
                    break;
-            case RE: //[FUNZIONA]               
+            case RE: //[FUNZIONA]              
                 
                 if(x+1<8){ //caso sotto ok
                     if(x-1>=0){ //caso sopra ok
@@ -258,6 +258,40 @@ public class GestoreAzione implements ActionListener{
                             if(i+j==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
                         }
                     }
+                break;
+            case CAVALLO: //[FUNZIONA]
+                //parti alte                    
+                    if(x-1>=0){ 
+                        if(y+2<8) //prima linea parte destra
+                            scacchi[x-1][y+2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        if(y-2>=0) //prima linea parte sinistra
+                            scacchi[x-1][y-2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                    }                    
+                
+                 
+                    if(x-2>=0){
+                        if(y+1<8) //seconda linea parte destra
+                            scacchi[x-2][y+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));                        
+                        if(y-1>=0) //seconda linea parte sinistra
+                            scacchi[x-2][y-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            
+                   }                    
+                //parti basse
+                   if(x+1<8){
+                       if(y+2<8) //prima linea parte destra
+                           scacchi[x+1][y+2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                       if(y-2>=0) //prima linea parte sinistra
+                           scacchi[x+1][y-2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   }
+                   
+                   if(x+2<8){
+                      if(y+1<8) //seconda linea parte destra
+                           scacchi[x+2][y+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                       if(y-1>=0) //seconda linea parte sinistra
+                           scacchi[x+2][y-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3)); 
+                   }
+                    
+                    
                 break;
         }
     }
