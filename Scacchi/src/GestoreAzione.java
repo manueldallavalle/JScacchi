@@ -23,7 +23,7 @@ public class GestoreAzione implements ActionListener{
         Boolean errore = false;
         Pedina ped = (Pedina)e.getSource();
         // CONTROLLO PEDINA VUOTA O SE STA MANGIANDO
-        if((ped.getPezzo() == null) || (t_pedina != null)){
+       /* if((ped.getPezzo() == null) || (t_pedina != null)){
             errore = false;
         }else if(((cont_mosse % 2 == 0) && !(ped.getColore().equals(Colore.NERO))) ||
                 ((cont_mosse % 2 != 0) && !(ped.getColore().equals(Colore.BIANCO)))){
@@ -33,10 +33,10 @@ public class GestoreAzione implements ActionListener{
         if(errore){
             String plurale = (ped.getColore().equals(Colore.NERO)) ? "bianchi" : "neri";
             JOptionPane.showMessageDialog(null,"E' il turno dei " + plurale + "!", "Errore!",JOptionPane.ERROR_MESSAGE);
-        }else{
+        }else{*/
             cambiaPezzo(ped, ped.getRiga(), ped.getColonna());
-        }
-        
+       // }
+       
     }
        
     private void cambiaPezzo(Pedina pedNew,int x,int y){
@@ -178,7 +178,7 @@ public class GestoreAzione implements ActionListener{
                         }
                     }
                 }break;
-            case REGINA:
+            case REGINA: //[FUNZIONA]
                     //caselle in basso
                    for(int i=y;i<7;i++){
                         scacchi[x][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
@@ -195,26 +195,59 @@ public class GestoreAzione implements ActionListener{
                    for(int i=x;i>0;i--){
                     scacchi[i-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
                    }
-                   //diagonale basso dx
-                    
+                    //diagonale basso dx
+                    for(int i=x+1;i<8;i++){
+                        for(int j=y+1;j<8;j++){
+                            if(j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        }
+                    }
+                    //diagonale alto dx
+                   for(int i=x-1;i>=0;i--){
+                        for(int j=y+1;j<8;j++){
+                            if(i+j==x+y) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        }
+                    }
                     //diagonale alto sx
+                   for(int i=x-1;i>=0;i--){
+                        for(int j=y-1;j>=0;j--){
+                            if(j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        }
+                    }
+                   
+                    //diagonale basso sx
+                   for(int i=x+1;i<8;i++){
+                        for(int j=y-1;j>=0;j--){
+                            if(i+j==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        }
+                    }
                    
                 break;
-            case ALFIERE:
-                   for(int i=y;i<7;i++){
-                       for(int j=y;j>0;j--){
-                        scacchi[i+1][j-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
-                       }                       
-                   }
-                   for(int i=y;i>0;i--){
-                        scacchi[i-1][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
-                   }
-                   for(int i=x;i<7;i++){
-                    scacchi[i+1][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
-                   }
-                   for(int i=x;i>0;i--){
-                    scacchi[i-1][i-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
-                   }
+            case ALFIERE: //[FUNZIONA]
+                 //diagonale basso dx
+                    for(int i=x+1;i<8;i++){
+                        for(int j=y+1;j<8;j++){
+                            if(j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        }
+                    }
+                    //diagonale alto dx
+                   for(int i=x-1;i>=0;i--){
+                        for(int j=y+1;j<8;j++){
+                            if(i+j==x+y) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        }
+                    }
+                    //diagonale alto sx
+                   for(int i=x-1;i>=0;i--){
+                        for(int j=y-1;j>=0;j--){
+                            if(j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        }
+                    }
+                   
+                    //diagonale basso sx
+                   for(int i=x+1;i<8;i++){
+                        for(int j=y-1;j>=0;j--){
+                            if(i+j==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                        }
+                    }
                 break;
         }
     }

@@ -115,9 +115,9 @@ public class DisegnaScacchiera extends JPanel{
                     }else if(k == 2 || k == 5){
                         (scacchi[z][k]).setPezzo(Pezzi.ALFIERE, temp_colore_pp);
                     }else if(k == 3){
-                        (scacchi[z][k]).setPezzo(Pezzi.RE, temp_colore_pp);
-                    }else if(k == 4){
                         (scacchi[z][k]).setPezzo(Pezzi.REGINA, temp_colore_pp);
+                    }else if(k == 4){
+                        (scacchi[z][k]).setPezzo(Pezzi.RE, temp_colore_pp);
                     }
 
                 }else if(z == 1 || z == 6){
