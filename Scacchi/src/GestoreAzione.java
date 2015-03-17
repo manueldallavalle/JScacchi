@@ -1,9 +1,6 @@
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.lang.Math.abs;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,27 +13,41 @@ public class GestoreAzione implements ActionListener{
     private static int cont_mosse = 1;
     private static Pedina t_pedina = null;
     
+    public GestoreAzione(){}
+    
     public GestoreAzione(Pedina[][] scacchi,JLabel text) {
         this.scacchi = scacchi;
         this.text=text;
     }
        
     public void actionPerformed(ActionEvent e) {
-        Boolean errore = false;
-        Pedina ped = (Pedina)e.getSource();
-        // CONTROLLO PEDINA VUOTA O SE STA MANGIANDO
-        if((ped.getPezzo() == null) || (t_pedina != null)){
-            errore = false;
-        }else if(((cont_mosse % 2 == 0) && !(ped.getColore().equals(Colore.NERO))) ||
-                ((cont_mosse % 2 != 0) && !(ped.getColore().equals(Colore.BIANCO)))){
-            errore = true;
-        }
-        
-        if(errore){
-            String plurale = (ped.getColore().equals(Colore.NERO)) ? "bianchi" : "neri";
-            JOptionPane.showMessageDialog(null,"E' il turno dei " + plurale + "!", "Errore!",JOptionPane.ERROR_MESSAGE);
+        // CONTROLLO SE HO PREMUTO MENU O PEDINA
+        if((e.getActionCommand()).equals("nuovaPartita")){
+            int confermaNuova = JOptionPane.showConfirmDialog(null, "Vuoi iniziare una nuova partita?", "Nuova Partita", JOptionPane.YES_NO_OPTION);
+            if (confermaNuova == 0){
+                // RESET SCACCHIERA + VARIABILI
+                cont_mosse = 1;
+                t_pedina = null;
+            }
+        }else if((e.getActionCommand()).equals("esciPartita")){
+            System.exit(0);
         }else{
-            cambiaPezzo(ped, ped.getRiga(), ped.getColonna());
+            Boolean errore = false;
+            Pedina ped = (Pedina)e.getSource();
+            // CONTROLLO PEDINA VUOTA O SE STA MANGIANDO
+            if((ped.getPezzo() == null) || (t_pedina != null)){
+                errore = false;
+            }else if(((cont_mosse % 2 == 0) && !(ped.getColore().equals(Colore.NERO))) ||
+                    ((cont_mosse % 2 != 0) && !(ped.getColore().equals(Colore.BIANCO)))){
+                errore = true;
+            }
+
+            if(errore){
+                String plurale = (ped.getColore().equals(Colore.NERO)) ? "bianchi" : "neri";
+                JOptionPane.showMessageDialog(null,"E' il turno dei " + plurale + "!", "Errore!",JOptionPane.ERROR_MESSAGE);
+            }else{
+                cambiaPezzo(ped, ped.getRiga(), ped.getColonna());
+            }
         }
        
     }
