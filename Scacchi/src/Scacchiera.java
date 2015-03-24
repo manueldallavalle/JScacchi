@@ -34,4 +34,8 @@ public class Scacchiera extends JFrame {
         add(scacc);
         pack();
     }
+    
+    protected void resetScacchi(){
+        scacc.resetScacchiera();
+    }
 }
