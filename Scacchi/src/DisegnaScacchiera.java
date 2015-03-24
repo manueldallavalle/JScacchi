@@ -1,42 +1,28 @@
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import static java.awt.BorderLayout.NORTH;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
+
 
 import javax.swing.*;
 
 public class DisegnaScacchiera extends JPanel{
     private Pedina[][] scacchi = new Pedina[8][8];
-    private int[][] posizione=new int[8][8];
-    private JLabel cr[]=new JLabel[9];
-    private JLabel cc[]=new JLabel[8];
-    private JLabel mossa=new JLabel();
-    private int i,j;
-    int cont=0;
-    private JPanel scacchiera=new JPanel();
-    private JPanel coordinateRiga=new JPanel();
-    private JPanel coordinateColonna=new JPanel();
-    private JPanel contatoreMosse=new JPanel();
+    private JLabel cr[] = new JLabel[9];
+    private JLabel cc[] = new JLabel[8];
+    private JLabel mossa = new JLabel();
+    int cont = 0;
+    private JPanel scacchiera = new JPanel();
+    private JPanel coordinateRiga = new JPanel();
+    private JPanel coordinateColonna = new JPanel();
+    private JPanel contatoreMosse = new JPanel();
     
     public DisegnaScacchiera(){
-        
         this.setLayout(new BorderLayout());
         struttura();
         setScacchiera();
-        //drawContatoreMosse();
     }
     private void struttura(){
             //Imposta le coordinate sopra della scacchiera
@@ -131,6 +117,13 @@ public class DisegnaScacchiera extends JPanel{
             
         }
     }
+    
+    protected void resetScacchiera(){
+        scacchiera.removeAll();
+        mossa.setText("MOSSE PARTITA: 0");
+        setScacchiera();
+    }
+    
     public Pedina[][] getScacchiera(){
         return scacchi;
     }
