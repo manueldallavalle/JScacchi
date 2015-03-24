@@ -1,9 +1,14 @@
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.border.LineBorder;
 
 
@@ -19,6 +24,25 @@ public class GestoreAzione implements ActionListener{
         this.scacchi = scacchi;
         this.text=text;
     }
+    
+    private Window resetWindowScacchi(Component c) {
+        Class cls = c.getClass();        
+        if((cls.getName()).equals("Scacchiera")){
+            Scacchiera jf = (Scacchiera)c;
+            jf.resetScacchi();
+            jf.pack();
+        }
+        
+        if (c instanceof Window) {
+            return (Window) c;
+        } else if (c instanceof JPopupMenu) {
+            JPopupMenu pop = (JPopupMenu) c;
+            return resetWindowScacchi(pop.getInvoker());
+        } else {
+            Container parent = c.getParent();
+            return parent == null ? null : resetWindowScacchi(parent);
+        }
+    }
        
     public void actionPerformed(ActionEvent e) {
         // CONTROLLO SE HO PREMUTO MENU O PEDINA
@@ -28,6 +52,7 @@ public class GestoreAzione implements ActionListener{
                 // RESET SCACCHIERA + VARIABILI
                 cont_mosse = 1;
                 t_pedina = null;
+                Window w = resetWindowScacchi((Component) e.getSource());
             }
         }else if((e.getActionCommand()).equals("esciPartita")){
             System.exit(0);
@@ -227,7 +252,12 @@ public class GestoreAzione implements ActionListener{
                         for(int j=y+1;j<8;j++){
                             if(i+j==x+y) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
                         }
-                    }
+                                   for(int z = 0; z < 8; z++){
+                    // COLORE CASELLE
+                    for(int k = 0; k < 8; k++){     
+                        scacchi[z][k] = null;
+                    }   
+                } }
                     //diagonale alto sx
                    for(int i=x-1;i>=0;i--){
                         for(int j=y-1;j>=0;j--){
@@ -313,4 +343,5 @@ public class GestoreAzione implements ActionListener{
             scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK, 1)); 
         }
     }
+
 }
