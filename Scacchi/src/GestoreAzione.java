@@ -21,6 +21,7 @@ public class GestoreAzione implements ActionListener{
     private static int cont_nere = 0,cont_bianche = 0;
     private JLabel ped_mangiate_bianche[] = new JLabel[16];
     private JLabel ped_mangiate_nere[] = new JLabel[16];
+    private boolean flag=true;
     
     public GestoreAzione(){}
     
@@ -305,113 +306,192 @@ public class GestoreAzione implements ActionListener{
                         }
                     }
                 }break;
-            case REGINA:
-                    //caselle in basso
+            case REGINA: //[FUNZIONA]
+                   //caselle a destra
                    for(int i=y;i<7;i++){
+                       if(scacchi[x][i+1].getPezzo()==null)
                         scacchi[x][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
+                       else if((scacchi[x][y].colore_pezzo.equals(scacchi[x][i+1].colore_pezzo))==false){
+                           scacchi[x][i+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                           break;
+                       }
+                       else break;
+                   }
+                   //casella a sinistra 
+                   for(int i=y;i>0;i--){
+                       if(scacchi[x][i-1].getPezzo()==null)
+                        scacchi[x][i-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
+                        else if((scacchi[x][y].colore_pezzo.equals(scacchi[x][i-1].colore_pezzo))==false){
+                           scacchi[x][i-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                           break;
+                       }
+                       else break;
+                   }
+                   //caselle in basso
+                   for(int i=x;i<7;i++){
+                       if(scacchi[i+1][y].getPezzo()==null)
+                        scacchi[i+1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
+                       else if((scacchi[x][y].colore_pezzo.equals(scacchi[i+1][y].colore_pezzo))==false){
+                           scacchi[i+1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                           break;
+                       }
+                       else break;
                    }
                    //caselle in alto
-                   for(int i=y;i>0;i--){
-                        scacchi[x][i-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
-                   }
-                   //caselle a destra
-                   for(int i=x;i<7;i++){
-                    scacchi[i+1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
-                   }
-                   //caselle a sinistra
                    for(int i=x;i>0;i--){
-                    scacchi[i-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
+                     if(scacchi[i-1][y].getPezzo()==null)  
+                        scacchi[i-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
+                     else if((scacchi[x][y].colore_pezzo.equals(scacchi[i-1][y].colore_pezzo))==false){
+                           scacchi[i-1][y].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                           break;
+                       }
+                     else break;
                    }
                     //diagonale basso dx
-                    for(int i=x+1;i<8;i++){
-                        for(int j=y+1;j<8;j++){
-                            if(j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   flag=true;
+                    for(int i=x+1;i<8 && flag;i++){
+                        for(int j=y+1;j<8 && flag;j++){
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==0 && j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==-1 && j-i==y-x) flag=false;
+                            else if(j-i==y-x){
+                                scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                                flag=false;
+                            }
+                            
                         }
                     }
-                    //diagonale alto dx
-                   for(int i=x-1;i>=0;i--){
-                        for(int j=y+1;j<8;j++){
-                            if(i+j==x+y) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   //diagonale alto dx
+                   flag=true; 
+                   for(int i=x-1;i>=0 && flag;i--){
+                        for(int j=y+1;j<8 && flag;j++){
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==0 && j+i==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==-1 && j+i==y+x) flag=false;
+                            else if(j+i==y+x){
+                                scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                                flag=false;
+                            }
                         }
-                                   for(int z = 0; z < 8; z++){
-                    // COLORE CASELLE
-                    for(int k = 0; k < 8; k++){     
-                        scacchi[z][k] = null;
-                    }   
-                } }
+                   }
+                   
                     //diagonale alto sx
-                   for(int i=x-1;i>=0;i--){
-                        for(int j=y-1;j>=0;j--){
-                            if(j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   flag=true; 
+                   for(int i=x-1;i>=0 && flag;i--){
+                        for(int j=y-1;j>=0 && flag;j--){
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==0 && j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==-1 && j-i==y-x) flag=false;
+                            else if(j-i==y-x){
+                                scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                                flag=false;
+                            }
                         }
                     }
                    
                     //diagonale basso sx
-                   for(int i=x+1;i<8;i++){
-                        for(int j=y-1;j>=0;j--){
-                            if(i+j==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   flag=true; 
+                   for(int i=x+1;i<8 && flag;i++){
+                        for(int j=y-1;j>=0 && flag;j--){
+                               if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==0 && j+i==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==-1 && j+i==y+x) flag=false;
+                            else if(j+i==y+x){
+                                scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                                flag=false;
+                            }
                         }
                     }
                    
                 break;
-            case ALFIERE:
-                 //diagonale basso dx
-                    for(int i=x+1;i<8;i++){
-                        for(int j=y+1;j<8;j++){
-                            if(j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+            case ALFIERE: //[FUNZIONA]
+                  //diagonale basso dx
+                 flag=true;
+                    for(int i=x+1;i<8 && flag;i++){
+                        for(int j=y+1;j<8 && flag;j++){
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==0 && j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==-1 && j-i==y-x) flag=false;
+                            else if(j-i==y-x){
+                                scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                                flag=false;
+                            }
+                            
                         }
                     }
-                    //diagonale alto dx
-                   for(int i=x-1;i>=0;i--){
-                        for(int j=y+1;j<8;j++){
-                            if(i+j==x+y) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   //diagonale alto dx
+                   flag=true; 
+                   for(int i=x-1;i>=0 && flag;i--){
+                        for(int j=y+1;j<8 && flag;j++){
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==0 && j+i==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==-1 && j+i==y+x) flag=false;
+                            else if(j+i==y+x){
+                                scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                                flag=false;
+                            }
                         }
-                    }
+                   }
+                   
                     //diagonale alto sx
-                   for(int i=x-1;i>=0;i--){
-                        for(int j=y-1;j>=0;j--){
-                            if(j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   flag=true; 
+                   for(int i=x-1;i>=0 && flag;i--){
+                        for(int j=y-1;j>=0 && flag;j--){
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==0 && j-i==y-x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==-1 && j-i==y-x) flag=false;
+                            else if(j-i==y-x){
+                                scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                                flag=false;
+                            }
                         }
                     }
                    
                     //diagonale basso sx
-                   for(int i=x+1;i<8;i++){
-                        for(int j=y-1;j>=0;j--){
-                            if(i+j==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                   flag=true; 
+                   for(int i=x+1;i<8 && flag;i++){
+                        for(int j=y-1;j>=0 && flag;j--){
+                               if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==0 && j+i==y+x) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[i][j])==-1 && j+i==y+x) flag=false;
+                            else if(j+i==y+x){
+                                scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 2));
+                                flag=false;
+                            }
                         }
                     }
+                   
                 break;
-            case CAVALLO:
+            case CAVALLO: //[FUNZIONA]
                 //parti alte                    
                     if(x-1>=0){ 
                         if(y+2<8) //prima linea parte destra
-                            scacchi[x-1][y+2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[x-1][y+2])==0) scacchi[x-1][y+2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[x-1][y+2])>0) scacchi[x-1][y+2].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 3));
                         if(y-2>=0) //prima linea parte sinistra
-                            scacchi[x-1][y-2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
-                    }                    
+                             if(sovrascriviPezzo(scacchi[x][y],scacchi[x-1][y-2])==0) scacchi[x-1][y-2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[x-1][y-2])>0) scacchi[x-1][y-2].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 3));}                    
                 
                  
                     if(x-2>=0){
                         if(y+1<8) //seconda linea parte destra
-                            scacchi[x-2][y+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));                        
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[x-2][y+1])==0) scacchi[x-2][y+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[x-2][y+1])>0) scacchi[x-2][y+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 3));
                         if(y-1>=0) //seconda linea parte sinistra
-                            scacchi[x-2][y-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
-                            
+                            if(sovrascriviPezzo(scacchi[x][y],scacchi[x-2][y-1])==0) scacchi[x-2][y-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[x-2][y-1])>0) scacchi[x-2][y-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 3));
+                        
                    }                    
                 //parti basse
                    if(x+1<8){
                        if(y+2<8) //prima linea parte destra
-                           scacchi[x+1][y+2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
-                       if(y-2>=0) //prima linea parte sinistra
-                           scacchi[x+1][y-2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
-                   }
+                           if(sovrascriviPezzo(scacchi[x][y],scacchi[x+1][y+2])==0) scacchi[x+1][y+2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[x+1][y+2])>0) scacchi[x+1][y+2].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 3));
+                        if(y-2>=0) //prima linea parte sinistra
+                           if(sovrascriviPezzo(scacchi[x][y],scacchi[x+1][y-2])==0) scacchi[x+1][y-2].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[x+1][y-2])>0) scacchi[x+1][y-2].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 3));
+                        }
                    
                    if(x+2<8){
                       if(y+1<8) //seconda linea parte destra
-                           scacchi[x+2][y+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
-                       if(y-1>=0) //seconda linea parte sinistra
-                           scacchi[x+2][y-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3)); 
-                   }
+                           if(sovrascriviPezzo(scacchi[x][y],scacchi[x+2][y+1])==0) scacchi[x+2][y+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[x+2][y+1])>0) scacchi[x+2][y+1].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 3));
+                        if(y-1>=0) //seconda linea parte sinistra
+                           if(sovrascriviPezzo(scacchi[x][y],scacchi[x+2][y-1])==0) scacchi[x+2][y-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 3));
+                            else if(sovrascriviPezzo(scacchi[x][y],scacchi[x+2][y-1])>0) scacchi[x+2][y-1].setBorder(BorderFactory.createLineBorder(java.awt.Color.red, 3));
+                        }
                     
                     
                 break;

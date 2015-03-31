@@ -7,7 +7,7 @@ public class Main {
 			@Override
 			public void run() {
 				JFrame frame = new Scacchiera();
-				frame.setTitle("Scacchi v1.0");
+				frame.setTitle("Scacchi");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
                                 frame.setResizable(false);

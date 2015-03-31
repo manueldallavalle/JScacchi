@@ -27,15 +27,17 @@ public class DisegnaScacchiera extends JPanel{
     private void struttura(){
             //Imposta le coordinate sopra della scacchiera
            coordinateRiga.setLayout(new FlowLayout());
-           JLabel vuoto=new JLabel();
-           JLabel vuoto1=new JLabel();
+           JLabel vuoto=new JLabel("PEZZI MANGIATI");
+           vuoto.setHorizontalAlignment(2);
+           vuoto.setForeground(java.awt.Color.white);
+           JLabel vuoto1=new JLabel("");
            vuoto.setPreferredSize(new Dimension(100,30));
            vuoto1.setPreferredSize(new Dimension(57,30));
            coordinateRiga.add(vuoto1);
            for(int i=0;i<8;i++){
                cr[i]=new JLabel(""+(char)(i+65)); 
                cr[i].setHorizontalAlignment(JLabel.CENTER);
-               cr[i].setHorizontalAlignment(/*JLabel.CENTER*/2);
+               cr[i].setHorizontalAlignment(2);
                cr[i].setPreferredSize(new Dimension(70, 30));
                cr[i].setForeground(java.awt.Color.white);
                coordinateRiga.add(cr[i]);
