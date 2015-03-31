@@ -97,7 +97,7 @@ public class GestoreAzione implements ActionListener{
                     // CONTROLLO CASELLA VALIDA
                     Color lp = ((LineBorder)pedNew.getBorder()).getLineColor();
         
-                    if(lp.equals(Color.green)){
+                    if(lp.equals(Color.green) ||  lp.equals(Color.red)){
                         (scacchi[x][y]).setPezzo(t_pedina.getPezzo(), t_pedina.getColore());
                         cont_mosse++;
                         t_pedina.Elimina();

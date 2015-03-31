@@ -111,7 +111,7 @@ public class DisegnaScacchiera extends JPanel{
                 }
                 
                 (scacchi[z][k]).addActionListener(new GestoreAzione(scacchi,mossa));
-                scacchi[z][k].setBorder(BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY, 1));
+                scacchi[z][k].setBorder(BorderFactory.createLineBorder(java.awt.Color.black, 1));
                 scacchiera.add(scacchi[z][k]);
             }
             
