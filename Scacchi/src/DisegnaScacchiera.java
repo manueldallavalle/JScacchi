@@ -1,11 +1,8 @@
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-
-
 import javax.swing.*;
 
 public class DisegnaScacchiera extends JPanel{
@@ -18,6 +15,9 @@ public class DisegnaScacchiera extends JPanel{
     private JPanel coordinateRiga = new JPanel();
     private JPanel coordinateColonna = new JPanel();
     private JPanel contatoreMosse = new JPanel();
+    private JLabel ped_mangiate_bianche[]=new JLabel[16];
+    private JLabel ped_mangiate_nere[]=new JLabel[16];
+    private JPanel pedineMangiate=new JPanel();
     
     public DisegnaScacchiera(){
         this.setLayout(new BorderLayout());
@@ -27,20 +27,21 @@ public class DisegnaScacchiera extends JPanel{
     private void struttura(){
             //Imposta le coordinate sopra della scacchiera
            coordinateRiga.setLayout(new FlowLayout());
-           JLabel vuoto=new JLabel(" ");
-           vuoto.setPreferredSize(new Dimension(35,30));
-           coordinateRiga.add(vuoto);
+           JLabel vuoto=new JLabel();
+           JLabel vuoto1=new JLabel();
+           vuoto.setPreferredSize(new Dimension(100,30));
+           vuoto1.setPreferredSize(new Dimension(57,30));
+           coordinateRiga.add(vuoto1);
            for(int i=0;i<8;i++){
                cr[i]=new JLabel(""+(char)(i+65)); 
                cr[i].setHorizontalAlignment(JLabel.CENTER);
+               cr[i].setHorizontalAlignment(/*JLabel.CENTER*/2);
                cr[i].setPreferredSize(new Dimension(70, 30));
                cr[i].setForeground(java.awt.Color.white);
                coordinateRiga.add(cr[i]);
                coordinateRiga.setBackground(java.awt.Color.decode("#c35817"));
-           }
-           
-           //Imposta le coordinate a sinistra della scacchiera
-           
+           }         
+           coordinateRiga.add(vuoto);
            coordinateColonna.setLayout(new GridLayout(8,1));
            coordinateColonna.setPreferredSize(new Dimension(40,70));
            
@@ -51,15 +52,7 @@ public class DisegnaScacchiera extends JPanel{
                coordinateColonna.add(cc[i]);
                coordinateColonna.setBackground(java.awt.Color.decode("#c35817"));
            }
-           
-           //imposta la scacchiera vera e propria
-           
-           add(coordinateColonna,BorderLayout.WEST);
-           add(coordinateRiga,BorderLayout.NORTH);
-           scacchiera.setBackground(Color.decode("#c35817"));
-           add(scacchiera,BorderLayout.CENTER);
-           scacchiera.setLayout(new GridLayout(8,8));
-           
+             
            //imposta jlabel che conta le mosse
            
            contatoreMosse.setLayout(new FlowLayout(FlowLayout.LEADING,42,0));
@@ -70,6 +63,26 @@ public class DisegnaScacchiera extends JPanel{
            contatoreMosse.setBackground(java.awt.Color.decode("#c35817"));
            add(contatoreMosse,BorderLayout.SOUTH);
            
+           // imposta barra a dx che contiene i pezzi mangiati
+           pedineMangiate.setLayout(new GridLayout(16,2));
+
+           for(int i=0;i<16;i++){
+               ped_mangiate_bianche[i]=new JLabel();
+               ped_mangiate_nere[i]=new JLabel();
+               ped_mangiate_bianche[i].setHorizontalAlignment( JLabel.CENTER );
+               ped_mangiate_nere[i].setHorizontalAlignment( JLabel.CENTER );
+               ped_mangiate_bianche[i].setPreferredSize(new Dimension(70, 40));
+               ped_mangiate_nere[i].setPreferredSize(new Dimension(70, 40));
+               pedineMangiate.add(ped_mangiate_bianche[i]);
+               pedineMangiate.add(ped_mangiate_nere[i]);
+               pedineMangiate.setBackground(java.awt.Color.decode("#c35817"));
+           }
+           add(coordinateColonna,BorderLayout.WEST);
+           add(coordinateRiga,BorderLayout.NORTH);
+           add(pedineMangiate,BorderLayout.EAST);
+           scacchiera.setBackground(Color.decode("#c35817"));
+           add(scacchiera,BorderLayout.CENTER);
+           scacchiera.setLayout(new GridLayout(8,8));    
     }
     
     private void setScacchiera(){
@@ -110,7 +123,7 @@ public class DisegnaScacchiera extends JPanel{
                     (scacchi[z][k]).setPezzo(Pezzi.PEDONE, temp_colore_pp);
                 }
                 
-                (scacchi[z][k]).addActionListener(new GestoreAzione(scacchi,mossa));
+                (scacchi[z][k]).addActionListener(new GestoreAzione(scacchi,mossa,ped_mangiate_bianche,ped_mangiate_nere));
                 scacchi[z][k].setBorder(BorderFactory.createLineBorder(java.awt.Color.black, 1));
                 scacchiera.add(scacchi[z][k]);
             }
@@ -122,6 +135,10 @@ public class DisegnaScacchiera extends JPanel{
         scacchiera.removeAll();
         mossa.setText("MOSSE PARTITA: 0");
         setScacchiera();
+        for(int i=0;i<16;i++){
+           this.ped_mangiate_bianche[i].setIcon(new javax.swing.ImageIcon(getClass().getResource("")));
+           this.ped_mangiate_nere[i].setIcon(new javax.swing.ImageIcon(getClass().getResource("")));
+        }
     }
     
     public Pedina[][] getScacchiera(){
