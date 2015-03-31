@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.LineBorder;
 
@@ -17,12 +18,17 @@ public class GestoreAzione implements ActionListener{
     private JLabel text;
     private static int cont_mosse = 1;
     private static Pedina t_pedina = null;
+    private static int cont_nere = 0,cont_bianche = 0;
+    private JLabel ped_mangiate_bianche[] = new JLabel[16];
+    private JLabel ped_mangiate_nere[] = new JLabel[16];
     
     public GestoreAzione(){}
     
-    public GestoreAzione(Pedina[][] scacchi,JLabel text) {
+    public GestoreAzione(Pedina[][] scacchi,JLabel text,JLabel[] ped_mangiate_bianche,JLabel[] ped_mangiate_nere){
         this.scacchi = scacchi;
         this.text=text;
+        this.ped_mangiate_bianche=ped_mangiate_bianche;
+        this.ped_mangiate_nere=ped_mangiate_nere;
     }
     
     private Window resetWindowScacchi(Component c) {
@@ -93,18 +99,27 @@ public class GestoreAzione implements ActionListener{
                     //RESET
                     t_pedina = null;
                     resetBordo();
-                }else if((sovrascriviPezzo(t_pedina,pedNew)) == true){
+                }else if((sovrascriviPezzo(t_pedina,pedNew)) >= 0){
                     // CONTROLLO CASELLA VALIDA
                     Color lp = ((LineBorder)pedNew.getBorder()).getLineColor();
         
-                    if(lp.equals(Color.green) ||  lp.equals(Color.red)){
+                    if((lp.equals(Color.green)) || (lp.equals(Color.red))){
+                        // AGGIORNAMENTO PEDINE MANGIATE
+                        String imglw = (pedNew.getPezzo() != null) ? ((pedNew.getPezzo()).toString().toLowerCase()) + "_" + ((pedNew.getColore()).toString().toLowerCase()) + ".gif" : "";                                                
+                        if((sovrascriviPezzo(t_pedina,pedNew)) == 1){
+                            ped_mangiate_nere[cont_nere].setIcon(new javax.swing.ImageIcon(getClass().getResource(imglw)));
+                            cont_nere++;
+                        }else if((sovrascriviPezzo(t_pedina,pedNew)) == 2){
+                            ped_mangiate_bianche[cont_bianche].setIcon(new javax.swing.ImageIcon(getClass().getResource(imglw)));
+                            cont_bianche++;
+                        }
+                        // SPOSTAMENTO PEDINA DOMINANTE
                         (scacchi[x][y]).setPezzo(t_pedina.getPezzo(), t_pedina.getColore());
-                        cont_mosse++;
                         t_pedina.Elimina();
+                        cont_mosse++;
                     }else{
                         JOptionPane.showMessageDialog(null,"Seleziona una casella valida!", "Errore!",JOptionPane.ERROR_MESSAGE);
                     }
-                   
                     t_pedina = null;
                     resetBordo();
                 }else{
@@ -117,10 +132,26 @@ public class GestoreAzione implements ActionListener{
             text.setText("\t\tMOSSE PARTITA: "+(cont_mosse - 1));
     }
     
-    protected boolean sovrascriviPezzo(Pedina old, Pedina nn){
-        // STESSO COLORE -- MOSSA NON VALIDA
-        // COLORE DIVERSO -- MOSSA VALIDA
-        return (old.getColore() != nn.getColore());
+    protected int sovrascriviPezzo(Pedina old, Pedina nw){
+        /**
+          * STESSO COLORE -- MOSSA NON VALIDA
+          * COLORE DIVERSO -- MOSSA VALIDA
+          * -1 = STESSO COLORE
+          * 0 = MANGIATA VUOTA
+          * 1 = MANGIATA NERA
+          * 2 = MANGIATA BIANCA
+        */
+        if((old.getColore()).equals(nw.getColore())){
+            return -1;
+        }else if(nw.getColore() == null){
+           return 0;
+        }else if(nw.getColore().equals(Colore.NERO)){
+           return 1;
+        }else if(nw.getColore().equals(Colore.BIANCO)){
+           return 2;
+        }
+        
+        return -1;
     }
     
     private void caselleAmmesse(Pedina ped,int x, int y){
@@ -218,7 +249,7 @@ public class GestoreAzione implements ActionListener{
                                         if(i==x && j==y) scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.black, 2));
                                         else scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.green, 2));
                                     }
-                                }                     //scacchi[xx][yy] = null;
+                                }
                             }
                         }else{ //caso sinistra out
                             for(int i=x-1;i<x+2;i++){
