@@ -15,10 +15,10 @@ public class Casella extends JButton{
         setPreferredSize(new Dimension(70,70));
         switch(sfondo){
             case NERO:
-                this.setBackground(Color.decode("#c35817"));
+                this.setBackground(Color.decode("#c46f38"));
                 break;
             case BIANCO:
-                this.setBackground(Color.WHITE);
+                this.setBackground(Color.decode("#f6d5a5"));
                 break;
             default:
                 JOptionPane.showMessageDialog(null,"ERRORE CASELLA");
