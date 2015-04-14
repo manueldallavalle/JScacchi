@@ -87,7 +87,11 @@ public class GestoreAzione implements ActionListener{
             if(t_pedina == null){
                 if(pedNew.getPezzo() != null){
                     t_pedina = pedNew;
-                    caselleAmmesse(pedNew,x,y);                    
+                    caselleAmmesse(pedNew,x,y);
+                    if(!mosseDisponibili()){
+                        JOptionPane.showMessageDialog(null,"Questa pedina non può muoversi!", "Errore!",JOptionPane.ERROR_MESSAGE);
+                        t_pedina = null;
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null,"Seleziona una casella valida!", "Errore!",JOptionPane.ERROR_MESSAGE);
                 }
@@ -537,6 +541,17 @@ public class GestoreAzione implements ActionListener{
            for(int j=0;j<8;j++)
             scacchi[i][j].setBorder(BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY, 1)); 
         }
+    }
+
+    private boolean mosseDisponibili(){
+        int cont_caselle = 0;
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                Color tmp = ((LineBorder)scacchi[i][j].getBorder()).getLineColor();
+                if((tmp.equals(Color.green)) || (tmp.equals(Color.red))) cont_caselle++;
+            }
+        } 
+        return (cont_caselle > 0);
     }
 
 }
