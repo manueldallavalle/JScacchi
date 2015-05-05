@@ -377,6 +377,7 @@ public class GestoreAzione implements ActionListener{
     private void caselleAmmesseRegina(Pedina ped,int x,int y,int scelta){
         //caselle a destra
                    for(int i=y;i<7;i++){
+<<<<<<< HEAD
                         if(scacchi[x][i+1].getPezzo()==null)
                             disegna(x,i+1,scelta,0,matriceControllo);
                         else if((scacchi[x][y].colore_pezzo.equals(scacchi[x][i+1].colore_pezzo))==false){
@@ -415,6 +416,46 @@ public class GestoreAzione implements ActionListener{
                         }
                         else break;
                     }
+=======
+                       if(scacchi[x][i+1].getPezzo()==null)
+                        disegna(x,i+1,0,0,matriceControllo);
+                       else if((scacchi[x][y].colore_pezzo.equals(scacchi[x][i+1].colore_pezzo))==false){
+                           disegna(x,i+1,scelta,1,matriceControllo);
+                           break;
+                       }
+                       else break;
+                   }
+                   //casella a sinistra 
+                   for(int i=y;i>0;i--){
+                       if(scacchi[x][i-1].getPezzo()==null)
+                        disegna(x,i-1,0,0,matriceControllo);
+                        else if((scacchi[x][y].colore_pezzo.equals(scacchi[x][i-1].colore_pezzo))==false){
+                           disegna(x,i-1,scelta,1,matriceControllo);
+                           break;
+                       }
+                       else break;
+                   }
+                   //caselle in basso
+                   for(int i=x;i<7;i++){
+                       if(scacchi[i+1][y].getPezzo()==null)
+                        disegna(i+1,y,0,0,matriceControllo);
+                       else if((scacchi[x][y].colore_pezzo.equals(scacchi[i+1][y].colore_pezzo))==false){
+                          disegna(i+1,y,scelta,1,matriceControllo);
+                           break;
+                       }
+                       else break;
+                   }
+                   //caselle in alto
+                   for(int i=x;i>0;i--){
+                     if(scacchi[i-1][y].getPezzo()==null)  
+                        disegna(i-1,y,0,0,matriceControllo);
+                     else if((scacchi[x][y].colore_pezzo.equals(scacchi[i-1][y].colore_pezzo))==false){
+                          disegna(i-1,y,scelta,1,matriceControllo);
+                           break;
+                       }
+                     else break;
+                   }
+>>>>>>> origin/master
                     //diagonale basso dx
                    flag=true;
                     for(int i=x+1;i<8 && flag;i++){
@@ -635,11 +676,14 @@ public class GestoreAzione implements ActionListener{
                 }
             }
         }
+<<<<<<< HEAD
         for(i=0;i<8;i++){
             for(j=0;j<8;j++){
                 JOptionPane.showMessageDialog(null,matriceControllo[i][j]+" riga"+i+" colonna"+j);
             }
         }
+=======
+>>>>>>> origin/master
         if(xRe==7 && yRe==7)
             status=1; //angolo basso dx
         if(xRe==7 && yRe==0)
@@ -659,6 +703,7 @@ public class GestoreAzione implements ActionListener{
         switch (status)
         {
             case 1:
+<<<<<<< HEAD
                 JOptionPane.showMessageDialog(null,+matriceControllo[xRe][yRe]+" normale\n"+matriceControllo[xRe-1][yRe]+" alto\n"+matriceControllo[xRe-1][yRe-1]+" alto sx\n"+matriceControllo[xRe][yRe-1]+" sinistra");
                 if(matriceControllo[xRe][yRe]==1 && (matriceControllo[xRe-1][yRe]==1 || scacchi[xRe-1][yRe].getPezzo()!=null) && (matriceControllo[xRe-1][yRe-1]==1 || scacchi[xRe-1][yRe-1].getPezzo()!=null) && (matriceControllo[xRe][yRe-1]==1 || scacchi[xRe][yRe-1].getPezzo()!=null))
                     JOptionPane.showMessageDialog(null,"scaco matto!!!");
@@ -701,6 +746,41 @@ public class GestoreAzione implements ActionListener{
             default:
                 JOptionPane.showMessageDialog(null,+matriceControllo[xRe][yRe]+" normale\n"+matriceControllo[xRe-1][yRe]+" alto\n"+matriceControllo[xRe-1][yRe+1]+" alto dx\n"+matriceControllo[xRe][yRe+1]+" destra\n"+matriceControllo[xRe+1][yRe+1]+"basso dx\n"+matriceControllo[xRe+1][yRe]+" basso\n"+matriceControllo[xRe+1][yRe-1]+"basso sx\n"+matriceControllo[xRe][yRe-1]+" sinistra\n"+matriceControllo[xRe-1][yRe-1]+"alto sx");
                 if(matriceControllo[xRe][yRe]==1 && (matriceControllo[xRe-1][yRe]==1 || scacchi[xRe-1][yRe].getPezzo()!=null) && (matriceControllo[xRe-1][yRe+1]==1 || scacchi[xRe-1][yRe+1].getPezzo()!=null) && (matriceControllo[xRe][yRe+1]==1 || scacchi[xRe][yRe+1].getPezzo()!=null) && (matriceControllo[xRe+1][yRe+1]==1 || scacchi[xRe+1][yRe+1].getPezzo()!=null) && (matriceControllo[xRe+1][yRe]==1 || scacchi[xRe+1][yRe].getPezzo()!=null) && (matriceControllo[xRe+1][yRe-1]==1 || scacchi[xRe+1][yRe-1].getPezzo()!=null) && (matriceControllo[xRe][yRe-1]==1 || scacchi[xRe][yRe-1].getPezzo()!=null) && (matriceControllo[xRe-1][yRe-1]==1 || scacchi[xRe-1][yRe-1].getPezzo()!=null))
+=======
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe-1][yRe]==1 && matriceControllo[xRe-1][yRe-1]==1 && matriceControllo[xRe][yRe-1]==1)
+                    JOptionPane.showMessageDialog(null,"scaco matto!!!");
+            break;
+            case 2:
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe-1][yRe]==1 && matriceControllo[xRe-1][yRe+1]==1 && matriceControllo[xRe][yRe+1]==1)
+                    JOptionPane.showMessageDialog(null,"scaco matto!!!");
+            break;
+            case 3:
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe+1][yRe]==1 && matriceControllo[xRe+1][yRe-1]==1 && matriceControllo[xRe][yRe-1]==1)
+                    JOptionPane.showMessageDialog(null,"scaco matto!!!");
+            break;
+            case 4:
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe+1][yRe]==1 && matriceControllo[xRe+1][yRe+1]==1 && matriceControllo[xRe][yRe+1]==1)
+                    JOptionPane.showMessageDialog(null,"scaco matto!!!");
+            break;
+            case 5:
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe-1][yRe-1]==1 && matriceControllo[xRe-1][yRe]==1 && matriceControllo[xRe-1][yRe+1]==1 && matriceControllo[xRe][yRe+1]==1 && matriceControllo[xRe][yRe-1]==1)
+                    JOptionPane.showMessageDialog(null,"scaco matto!!!");
+            break;
+            case 6:
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe+1][yRe-1]==1 && matriceControllo[xRe+1][yRe]==1 && matriceControllo[xRe+1][yRe+1]==1 && matriceControllo[xRe][yRe+1]==1 && matriceControllo[xRe][yRe-1]==1)
+                    JOptionPane.showMessageDialog(null,"scaco matto!!!");
+            break;
+            case 7:
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe-1][yRe]==1 && matriceControllo[xRe-1][yRe-1]==1 && matriceControllo[xRe][yRe-1]==1 && matriceControllo[xRe+1][yRe-1]==1 && matriceControllo[xRe+1][yRe]==1)
+                    JOptionPane.showMessageDialog(null,"scaco matto!!!");
+            break;
+            case 8:
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe-1][yRe]==1 && matriceControllo[xRe-1][yRe+1]==1 && matriceControllo[xRe][yRe+1]==1 && matriceControllo[xRe+1][yRe+1]==1 && matriceControllo[xRe+1][yRe]==1)
+                    JOptionPane.showMessageDialog(null,"scaco matto!!!");
+            break;
+            default:
+                if(matriceControllo[xRe][yRe]==1 && matriceControllo[xRe-1][yRe]==1 && matriceControllo[xRe-1][yRe+1]==1 && matriceControllo[xRe][yRe+1]==1 && matriceControllo[xRe+1][yRe+1]==1 && matriceControllo[xRe+1][yRe]==1 && matriceControllo[xRe+1][yRe-1]==1 && matriceControllo[xRe][yRe-1]==1 && matriceControllo[xRe-1][yRe-1]==1)
+>>>>>>> origin/master
                     JOptionPane.showMessageDialog(null,"scaco matto!!!");     
         }
     }
